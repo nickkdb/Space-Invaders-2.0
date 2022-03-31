@@ -2,25 +2,38 @@ import pygame
 import sys
 from setup import load_img
 from player import Player, SCREENRECT
+from alien import Alien
 
 #GAME VARIABLES 
-screen = pygame.display.set_mode(SCREENRECT.size) # set game window
+screen = pygame.display.set_mode(SCREENRECT.size)
 clock = pygame.time.Clock()
+bgtile = pygame.transform.smoothscale(load_img("spacebg.png"), SCREENRECT.size)
+background = pygame.Surface(SCREENRECT.size)
 
 #PLAYER VARIABLES
 #move= [UP,RIGHT,DOWN,LEFT]
 move = [False,False,False,False]
+ship = Player()
 
 #ENEMY VARIABLES
 alienList = []
+alienMinX = SCREENRECT.left + 100
+alienMinY = SCREENRECT.top + 50
+alienPos = [alienMinX, alienMinY]
 
-#ITEMS TO DISPLAY
-bgtile = pygame.transform.smoothscale(load_img("spacebg.png"), SCREENRECT.size)
-background = pygame.Surface(SCREENRECT.size)
-ship = Player()
+while len(alienList) < 4:
+    alienRow = []
+    while len(alienRow) < 9:
+        alien = Alien(alienPos[0], alienPos[1])
+        alienRow.append(alien)
+        alienPos[0] += 75
+
+    alienList.append(alienRow)
+    alienPos[0] = alienMinX
+    alienPos[1] += 50
 
 # GAME LOOP
-
+print(ship.rect.height)
 while True:
 
     for event in pygame.event.get():
@@ -51,5 +64,10 @@ while True:
 
     ship.update(move)
     screen.blit(ship.image, ship.rect)
+
+    for row in alienList:
+        for alienShip in row:
+            screen.blit(pygame.transform.flip(alienShip.image, False, True), alienShip.rect)
+
     pygame.display.flip()
     clock.tick(60)
