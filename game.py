@@ -1,33 +1,55 @@
-from json.tool import main
 import pygame
 import sys
 from setup import load_img
+from player import Player, SCREENRECT
 
 #GAME VARIABLES 
-SCREENRECT = pygame.Rect(0,0,800,600) #set up a rectangle for the screen to reference later
 screen = pygame.display.set_mode(SCREENRECT.size) # set game window
 clock = pygame.time.Clock()
 
 #PLAYER VARIABLES
-move_left = False
-move_right= False
-move_up = False
-move_down = False
+#move= [UP,RIGHT,DOWN,LEFT]
+move = [False,False,False,False]
 
 #ENEMY VARIABLES
 alienList = []
 
+#ITEMS TO DISPLAY
+bgtile = pygame.transform.smoothscale(load_img("spacebg.png"), SCREENRECT.size)
+background = pygame.Surface(SCREENRECT.size)
+ship = Player()
 
-#GAME LOOP
+# GAME LOOP
 
 while True:
-    bgtile = pygame.transform.smoothscale(load_img("spacebg.png"), SCREENRECT.size)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                move[3] = True
+            if event.key == pygame.K_RIGHT:
+                move[1] = True
+            if event.key == pygame.K_UP:
+                move[0] = True
+            if event.key == pygame.K_DOWN:
+                move[2] = True
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                move[3] = False
+            if event.key == pygame.K_RIGHT:
+                move[1] = False
+            if event.key == pygame.K_UP:
+                move[0] = False
+            if event.key == pygame.K_DOWN:
+                move[2] = False
+
 
     screen.blit(bgtile, (0,0))
+
+    ship.update(move)
+    screen.blit(ship.image, ship.rect)
     pygame.display.flip()
     clock.tick(60)

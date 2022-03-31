@@ -1,13 +1,10 @@
 from setup import load_img
 import pygame
-from game import SCREENRECT
 
+SCREENRECT = pygame.Rect(0,0,800,600) #set up a rectangle for the screen to reference later
 PLAYERSIZE = (64,64)
-#move= [UP,RIGHT,DOWN,LEFT]
-move = [False,False,False,False] 
 startingY = SCREENRECT.bottom - 50
 startingX = SCREENRECT.centerx
-print(startingY)
 
 class Player:
 
@@ -17,7 +14,7 @@ class Player:
         self.speed = 4
 
     #Update IF within allowed area
-    def update(self):
+    def update(self, move):
         if move[3] and self.rect.left > 0:
             self.rect.x -= self.speed
         if move[1] and self.rect.right < SCREENRECT.right:
