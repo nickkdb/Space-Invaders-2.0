@@ -47,27 +47,16 @@ class Level:
         alienMinX = 68
         alienMinY = 32
         alienPos = [alienMinX, alienMinY]
-        # while len(alienList) < 4:
-        #     alienRow = []
-        #     while len(alienRow) < 9:
-        #         alien = Alien(alienPos[0], alienPos[1])
-        #         alienRow.append(alien)
-        #         alienPos[0] += 75
-
-        #     alienList.append(alienRow)
-        #     alienPos[0] = alienMinX
-        #     alienPos[1] += 50
+   
         for i in range(0,4):
             alienRow = []
             for j in range(0,9):
                 alien = Alien(alienPos[0], alienPos[1])
-                # alienRow.append(alien)
                 self.alienList.add(alien)
                 alienPos[0] += 75     
             self.alienList.add(alienRow)
             alienPos[0] = alienMinX
             alienPos[1] += 50          
-        # return alienList
 
     def updateAliens(self): 
         for alienShip in self.alienList:
