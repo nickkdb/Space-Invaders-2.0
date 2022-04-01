@@ -1,15 +1,12 @@
 import pygame
 import sys
 from setup import load_img, SCREENRECT
-from player import Player
-from alien import Alien
-from bullet import Bullet
 from level import Level
 
 #GAME VARIABLES 
 screen = pygame.display.set_mode(SCREENRECT.size)
 clock = pygame.time.Clock()
-bgtile = pygame.transform.smoothscale(load_img("spacebg.png"), SCREENRECT.size)
+bgtile = pygame.transform.smoothscale(load_img("background.png"), SCREENRECT.size)
 background = pygame.Surface(SCREENRECT.size)
 level = Level(screen)
 
