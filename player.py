@@ -21,4 +21,8 @@ class Player:
         if move[0] and self.rect.y >= SCREENRECT.bottom - 214: #arbitrary amount of space I decided ship can move
             self.rect.y -= self.speed
         if move[2] and self.rect.centery <= startingY: #ship can't go lower than where it starts
-            self.rect.y = min(self.rect.y + self.speed, startingY) #Makes sure we never exceed starting value
+            self.rect.y = min(self.rect.y + self.speed, startingY) #Makes sure we never exceed starting value 
+
+    # def fireShot(self):
+    #     self.bullet_rect.y -= self.bullet_speed
+    

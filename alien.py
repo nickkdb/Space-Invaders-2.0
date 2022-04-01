@@ -31,4 +31,11 @@ class Alien():
             Alien.movingRight = True
         else:
             self.rect.x += Alien.speed
+    
+    def checkForHit(self, bullet):
+        if self.rect.colliderect(bullet):
+            return True
+        else:
+            return False
+
 

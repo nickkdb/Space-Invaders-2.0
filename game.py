@@ -3,6 +3,7 @@ import sys
 from setup import load_img, SCREENRECT
 from player import Player
 from alien import Alien
+from bullet import Bullet
 
 #GAME VARIABLES 
 screen = pygame.display.set_mode(SCREENRECT.size)
@@ -14,10 +15,14 @@ background = pygame.Surface(SCREENRECT.size)
 #move= [UP,RIGHT,DOWN,LEFT]
 move = [False,False,False,False]
 ship = Player()
+bulletList = []
+playerFire = []
+enemyHit = []
+
 
 #ENEMY VARIABLES
 alienList = []
-aliensList = pygame.sprite.Group()
+# aliensList = pygame.sprite.Group()
 alienMinX = 68
 alienMinY = 32
 alienPos = [alienMinX, alienMinY]
@@ -50,6 +55,11 @@ while True:
                 move[0] = True
             if event.key == pygame.K_DOWN:
                 move[2] = True
+            if event.key == pygame.K_SPACE:
+                bullet = Bullet(ship.rect.centerx - 16, ship.rect.y - 12)
+                bulletList.append(bullet)
+                playerFire.append(True)
+                enemyHit.append(False)
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
                 move[3] = False
@@ -66,8 +76,20 @@ while True:
     ship.update(move)
     screen.blit(ship.image, ship.rect)
 
+    for idx, shot in enumerate(bulletList):
+        if playerFire[idx] and not enemyHit[idx]:
+            screen.blit(shot.image, shot.rect)
+            shot.update()            
+
     for row in alienList:
         for alienShip in row:
+            for idx, shot in enumerate(bulletList):
+                if alienShip.rect.colliderect(shot.rect):
+                    row.remove(alienShip)
+                    bulletList.remove(shot)
+                    playerFire.pop(idx)
+                    enemyHit.pop(idx)
+                    continue
             alienShip.update()
             screen.blit(pygame.transform.flip(alienShip.image, False, True), alienShip.rect)
 
