@@ -3,12 +3,13 @@ from setup import load_img, SCREENRECT
 
 ALIENSIZE = (64,36)
 
-class Alien():
+class Alien(pygame.sprite.Sprite):
     speed = 1
     direction = 1
     movingRight = True
     
     def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self) 
         self.image = pygame.transform.smoothscale(load_img('alien.png'), ALIENSIZE)
         self.rect = self.image.get_rect(topleft= (x,y))
 
