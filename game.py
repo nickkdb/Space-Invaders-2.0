@@ -1,7 +1,7 @@
 import pygame
 import sys
-from setup import load_img
-from player import Player, SCREENRECT
+from setup import load_img, SCREENRECT
+from player import Player
 from alien import Alien
 
 #GAME VARIABLES 
@@ -17,8 +17,9 @@ ship = Player()
 
 #ENEMY VARIABLES
 alienList = []
-alienMinX = SCREENRECT.left + 100
-alienMinY = SCREENRECT.top + 50
+aliensList = pygame.sprite.Group()
+alienMinX = 68
+alienMinY = 32
 alienPos = [alienMinX, alienMinY]
 
 while len(alienList) < 4:
@@ -33,7 +34,7 @@ while len(alienList) < 4:
     alienPos[1] += 50
 
 # GAME LOOP
-print(ship.rect.height)
+
 while True:
 
     for event in pygame.event.get():
@@ -67,6 +68,7 @@ while True:
 
     for row in alienList:
         for alienShip in row:
+            alienShip.update()
             screen.blit(pygame.transform.flip(alienShip.image, False, True), alienShip.rect)
 
     pygame.display.flip()

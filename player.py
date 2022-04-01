@@ -1,7 +1,6 @@
-from setup import load_img
+from setup import load_img, SCREENRECT
 import pygame
 
-SCREENRECT = pygame.Rect(0,0,800,600) #set up a rectangle for the screen to reference later
 PLAYERSIZE = (64,64)
 startingY = SCREENRECT.bottom - 50
 startingX = SCREENRECT.centerx
